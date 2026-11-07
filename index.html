@@ -165,6 +165,19 @@ nav svg{width:calc(var(--ds,30px)*.6);height:calc(var(--ds,30px)*.6)}.sep{width:
   main{margin-inline-start:84px!important;margin-inline-end:0!important;padding:16px 16px 40px!important;max-width:none}
   .sheet{display:none!important}
 }
+
+/* ===== Notes polish (v2.4) ===== */
+.nbh{gap:8px}.nbh .g{display:grid;place-items:center;padding:7px 10px;min-width:40px;border-radius:14px}.nbh .nbti{font-size:15px}
+.nbpill{display:flex;align-items:center;gap:2px;flex:none;border:1px solid var(--gb);border-radius:16px;padding:2px;background:color-mix(in srgb,var(--card) 40%,transparent)}
+.nbpill .g{border:0;background:transparent;min-width:34px;padding:6px}.nbpill #nbpi,.nbpill #nbz{min-width:44px;font-size:12px;color:var(--tx2);text-align:center}
+[dir=rtl] .nbpill svg{transform:scaleX(-1)}
+.nbmenu{position:absolute;inset-inline-end:10px;top:calc(58px + env(safe-area-inset-top,0px));z-index:5;min-width:210px;background:var(--card);border:1px solid var(--bd);border-radius:16px;padding:6px;box-shadow:0 18px 40px -14px #000a}
+.nbmenu[hidden]{display:none}.nbmenu button{all:unset;display:flex;gap:12px;align-items:center;width:100%;box-sizing:border-box;padding:11px 12px;border-radius:10px;cursor:pointer;font-size:14px}
+.nbmenu button:hover,.nbmenu button:focus-visible{background:color-mix(in srgb,var(--pr) 14%,transparent)}.nbmenu span{width:20px;text-align:center}
+#nbtl .ballb{width:44px;height:44px}#nbtl .ballb svg{width:21px;height:21px}#nbopts .ballb{width:38px;height:38px}
+.pcs i{width:26px;height:26px}
+.nbcoach{position:fixed;inset:0;z-index:60;display:grid;place-items:center;background:#000a;padding:16px}.nbcoach .card{max-width:400px;width:100%;margin:0}
+.nbk{box-shadow:0 8px 24px -16px #000a}.nbth{border-radius:0}
 </style>
 <script defer src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
 <script defer src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
@@ -372,7 +385,7 @@ if(pg=="tpl"){return `<h2>${t("tpl")}</h2>${isPro()?tplForm():lockCard([["إنش
 return `<h2>${t("set")}</h2>${setTabs()}${stab=="gen"?`${profCard()}<div class="card"><div class="row"><label>${t("name")}</label><input data-a="nm" value="${esc(S.set.name)}"></div><div class="row" style="margin-top:8px"><label>${t("lang")}</label><button class="${S.set.lang=="ar"?"b":"g"}" data-a="lg" data-v="ar">العربية</button><button class="${S.set.lang=="en"?"b":"g"}" data-a="lg" data-v="en">English</button></div>
 <div class="row" style="margin-top:8px"><label>${t("theme")}</label>${[["light","light"],["dark","dark"],["system","sys"]].map(x=>`<button class="${S.set.theme==x[0]?"b":"g"}" data-a="th" data-v="${x[0]}">${t(x[1])}</button>`).join("")}</div></div>
 <div class="card">${["goal","focus","short","long"].map(k=>`<div class="row" style="margin-bottom:6px"><label style="width:150px">${t(k)}</label><input type="number" min="1" style="max-width:90px" value="${S.set[k]}" data-a="sn" data-v="${k}"></div>`).join("")}<label class="row"><input type="checkbox" ${S.set.auto?"checked":""} data-a="au"> ${t("auto")}</label></div>
-`:""}${stab=="bar"?barCard():""}${stab=="study"?studyCard():""}${stab=="app"?appearCard()+dashEditCard():""}${stab=="acct"?(FREE?"":proCard())+`<div class="card"><b>↺ ${tx(["إعادة الضبط","Reset"])}</b><p style="color:var(--tx2);font-size:13px;line-height:1.7">${tx(["يعيد كل الإعدادات للوضع الأصلي. بياناتك (المهام والملاحظات والملفات) والاشتراك لا تتغيّر.","Restores every setting to its default. Your data (tasks, notes, files) and subscription are untouched."])}</p><button class="g" data-a="rst">↺ ${tx(["إعادة ضبط الإعدادات","Reset settings"])}</button></div>`:""}${stab=="snd"?`${sndCard()}${aiCard()}${setCards()}<div class="card"><b>💬 ${t("mot")}</b><label class="row" style="margin-top:8px"><input type="checkbox" ${S.set.mot!==false?"checked":""} data-a="mo"> ${t("mot")}</label><div class="row" style="margin:6px 0"><label>${t("motMin")}</label><input type="number" min="1" style="max-width:80px;flex:none" value="${S.set.motMin||5}" data-a="mm"></div><label class="row"><input type="checkbox" ${S.set.motSnd!==false?"checked":""} data-a="ms"> ${t("snd")}</label><label class="row"><input type="checkbox" ${S.set.motSpeak?"checked":""} data-a="mp"> ${t("spk")}</label><button class="g" data-a="mt" style="margin-top:8px">${t("test")}</button></div>`:""}${stab=="acct"?`<div class="card"><div class="row"><button class="g" data-a="ex">${t("exp")}</button><button class="g" data-a="csv">${t("csv")}</button><button class="g" data-a="prt">${t("print")}</button><button class="g" data-a="im">${t("imp")}</button><button class="g" data-a="tut">${t("tut")}</button></div><textarea id="jx" rows="4" style="width:100%;margin-top:8px"></textarea><small style="color:var(--tx2)">${t("note")}</small></div>`:""}`}
+`:""}${stab=="bar"?barCard():""}${stab=="study"?studyCard():""}${stab=="app"?appearCard()+dashEditCard():""}${stab=="acct"?diagCard()+(FREE?"":proCard())+`<div class="card"><b>↺ ${tx(["إعادة الضبط","Reset"])}</b><p style="color:var(--tx2);font-size:13px;line-height:1.7">${tx(["يعيد كل الإعدادات للوضع الأصلي. بياناتك (المهام والملاحظات والملفات) والاشتراك لا تتغيّر.","Restores every setting to its default. Your data (tasks, notes, files) and subscription are untouched."])}</p><button class="g" data-a="rst">↺ ${tx(["إعادة ضبط الإعدادات","Reset settings"])}</button></div>`:""}${stab=="snd"?`${sndCard()}${aiCard()}${setCards()}<div class="card"><b>💬 ${t("mot")}</b><label class="row" style="margin-top:8px"><input type="checkbox" ${S.set.mot!==false?"checked":""} data-a="mo"> ${t("mot")}</label><div class="row" style="margin:6px 0"><label>${t("motMin")}</label><input type="number" min="1" style="max-width:80px;flex:none" value="${S.set.motMin||5}" data-a="mm"></div><label class="row"><input type="checkbox" ${S.set.motSnd!==false?"checked":""} data-a="ms"> ${t("snd")}</label><label class="row"><input type="checkbox" ${S.set.motSpeak?"checked":""} data-a="mp"> ${t("spk")}</label><button class="g" data-a="mt" style="margin-top:8px">${t("test")}</button></div>`:""}${stab=="acct"?`<div class="card"><div class="row"><button class="g" data-a="ex">${t("exp")}</button><button class="g" data-a="csv">${t("csv")}</button><button class="g" data-a="prt">${t("print")}</button><button class="g" data-a="im">${t("imp")}</button><button class="g" data-a="tut">${t("tut")}</button></div><textarea id="jx" rows="4" style="width:100%;margin-top:8px"></textarea><small style="color:var(--tx2)">${t("note")}</small></div>`:""}`}
 function render(){render0();custom();if(foc)focusUI();if(qrOpen)qrMake();if(cpOpen){const i=$("#cpi");if(i)i.focus()}}
 function render0(){const pgc=lastPg!=pg;lastPg=pg;document.documentElement.classList.toggle("lite",!!S.set.lite);const a=S.set.lang,r=document.documentElement;r.lang=a;r.dir=a=="ar"?"rtl":"ltr";if(S.set.theme=="system")r.removeAttribute("data-theme");else r.dataset.theme=S.set.theme;
 const m=S.tm;$("#app").innerHTML=`<nav><b>ELITE STUDY</b><button class="${pg=="dash"?"on":""}" style="--h:160" aria-label="${t("home")}" data-a="go" data-v="dash">${ic("dash")}</button><i class="sep"></i>${NAV.filter(n=>n[0]!="dash"&&(n[0]!="pray"||pbarFaith())).map((n,i)=>`<button class="${pg==n[0]?"on":""}" style="--h:${i*30+10}" aria-label="${t(n[0])}" data-a="go" data-v="${n[0]}">${ic(n[0])}${n[0]=="plan"&&!PLANNER_OPEN?'<em class="pb">🔒</em>':n[0]=="rt"&&!isPro()?'<em class="pb">PRO</em>':n[0]=="nt"&&ntN()?`<em class="pb">${ntN()}</em>`:isNew(n[0])?'<em class="pb nw">NEW</em>':""}</button>`).join("")}</nav><main class="${pgc?"pgin":""}"><div class="row" style="justify-content:space-between"><div class="brand">ELITE STUDY</div><button class="g" data-a="cp">🔎 ${tx(["بحث","Search"])} Ctrl K</button></div>${hint()}${views()}</main>${tabbar()}${m.running&&pg!="pomo"?`<div class="mini" data-a="go" data-v="pomo">◔ <span class="tmt">${mm(rem())}</span></div>`:""}
@@ -447,22 +460,6 @@ const dockR=n=>{n._r=null;n.querySelectorAll("button,a").forEach(x=>x.style.tran
 document.addEventListener("mousemove",e=>{const n=e.target.closest&&e.target.closest("nav");if(!n||innerWidth<=760||1)return;const its=[...n.querySelectorAll("button,a")];if(!n._r){its.forEach(x=>x.style.transform="");n._r=its.map(x=>{const r=x.getBoundingClientRect();return r.top+r.height/2});n._b=its[0].getBoundingClientRect().height}const p=e.clientY,B=n._b,c=n._r,s=c.map(v=>1+.75*Math.max(0,1-Math.abs(p-v)/(B*2.4)));let k=0;c.forEach((v,i)=>{if(Math.abs(p-v)<Math.abs(p-c[k]))k=i});const off=[];let a=0;s.forEach((v,i)=>{if(i)a+=c[i]-c[i-1]-B;off.push(a+v*B/2);a+=v*B});const st=c[k]-off[k];its.forEach((x,i)=>{x.style.transform=`translateY(${st+off[i]-c[i]}px) scale(${s[i]})`})});
 document.addEventListener("mouseout",e=>{const n=e.target.closest&&e.target.closest("nav");if(n&&!n.contains(e.relatedTarget))dockR(n)});
 </script>
-<script>/* Optional platform services. They exist only inside the Claude viewer; everywhere else the features that need them stay hidden. */
-const Plat={sample:null,dl:null,db:null,assets:null,user:null,limits:null,ready:false};
-(async()=>{
-  if(typeof claude=="undefined"||typeof claude.use!="function"){Plat.ready=true;return}
-  const g=async n=>{try{return await claude.use(n)}catch(e){return null}};
-  [Plat.sample,Plat.dl,Plat.db,Plat.assets,Plat.user]=await Promise.all(["sample","downloads","db","assets","user"].map(g));
-  try{if(Plat.sample)Plat.limits=await Plat.sample.limits()}catch(e){}
-  Plat.ready=true;try{if(typeof exInit=="function")exInit();render()}catch(e){}
-})();
-const aiOn=()=>!!Plat.sample&&S.set.aiOn!==false;
-const hwOn=()=>aiOn()||!!(navigator.createHandwritingRecognizer&&window.HandwritingStroke);
-async function saveFile(blob,name){
-  if(Plat.dl){try{await Plat.dl.save({filename:name,data:blob});return}catch(e){if(e&&e.code&&e.code!="unavailable"&&e.code!="not_granted")return}}
-  const a=document.createElement("a");a.href=URL.createObjectURL(blob);a.download=name;document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(a.href),5000);
-}
-</script>
 <script>/* Phone: bottom tab bar + "More" sheet. Tablet: side rail. (The desktop dock is hidden on touch screens.) */
 let moreOpen=false;
 const TAB_MAIN=["dash","tasks","notes","pomo"];
@@ -510,17 +507,20 @@ document.addEventListener("click",e=>{const b=e.target.closest&&e.target.closest
 document.addEventListener("change",e=>{const d=e.target.dataset,a=d&&d.pl;if(!a)return;const v=e.target.value;if(a=="st")S.set.pStart=v;else if(a=="av")S.set.avail=Math.max(1,+v||4);else if(a=="br")S.set.pBrk=Math.max(0,+v||0);else if(a=="est"){const k=tk(d.id);if(k)k.est=Math.max(0,+v||0)}else return;sv();render()});
 </script>
 <script>/* Notebooks v2: handwriting, shapes, text, selection, PDF pages, PDF export. Vector items in IndexedDB. */
-const NB_W=820,NB_H=1160;
+const NB_W=820,NB_H=1160;let NB_MEM=false;const nbMemMap=new Map(),nbMemStore={put:o=>{nbMemMap.set(o.id,o);return{}},get:id=>({result:nbMemMap.get(id)}),delete:id=>{nbMemMap.delete(id);return{}}};
 const NB_FONT='-apple-system,BlinkMacSystemFont,"SF Pro Text",Inter,"Segoe UI",system-ui,"SF Arabic",Cairo,"Noto Sans Arabic",sans-serif';
 const NB_FONTS={sys:["iPhone / System",NB_FONT],cairo:["Cairo","Cairo,sans-serif"],serif:["Serif","Georgia,Amiri,serif"],hand:["Handwriting","'Segoe Print','Bradley Hand','Comic Sans MS',cursive"],mono:["Mono","ui-monospace,Menlo,Consolas,monospace"]};
 const NB_PAPERS=[["#ffffff",["أبيض","White"]],["#fbf5e6",["كريمي","Cream"]],["#e8f0fe",["أزرق فاتح","Sky"]],["#1f2933",["داكن","Dark"]],["#173f35",["سبورة","Board"]]];
 const NB_COLORS=["#111827","#ef4444","#f59e0b","#22c55e","#3b82f6","#8b5cf6","#ec4899","#f8fafc"];
 const NB_KINDS=[["ball",["قلم حبر","Pen"],"✎",3,1],["fountain",["قلم حبر سائل","Fountain"],"🖋",4,1],["pencil",["قلم رصاص","Pencil"],"✏️",3,1],["marker",["ماركر","Marker"],"🖊",4,.9],["hl",["هايلايت","Highlighter"],"🖍",5,.35]];
+const nbIc=p=>`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" width="20" height="20">${p}</svg>`;
+const NBI=Object.fromEntries(Object.entries({close:'<path d="M6 6l12 12M18 6L6 18"/>',prev:'<path d="M15 5l-7 7 7 7"/>',next:'<path d="M9 5l7 7-7 7"/>',minus:'<path d="M5 12h14"/>',plus:'<path d="M12 5v14M5 12h14"/>',export:'<path d="M12 3v12M7 10l5 5 5-5M5 21h14"/>',more:'<circle cx="5" cy="12" r="1.6"/><circle cx="12" cy="12" r="1.6"/><circle cx="19" cy="12" r="1.6"/>',hand:'<path d="M8 13V6a1.5 1.5 0 013 0v5m0-6a1.5 1.5 0 013 0v6m0-4a1.5 1.5 0 013 0v7a6 6 0 01-6 6h-1a6 6 0 01-5-3l-2-4a1.5 1.5 0 012.5-1.5L8 14"/>',pen:'<path d="M4 20l1-4L17 4l3 3L8 19z"/><path d="M14 7l3 3"/>',eraser:'<path d="M4 15l8-8 6 6-6 6H8z"/><path d="M12 19h8"/>',select:'<rect x="4" y="4" width="16" height="16" rx="2" stroke-dasharray="3 3"/>',shape:'<rect x="3" y="11" width="9" height="9" rx="1"/><circle cx="16" cy="8" r="5"/>',text:'<path d="M5 6V4h14v2M12 4v16M9 20h6"/>',wand:'<path d="M5 19L17 7M14 4l1 2 2 1-2 1-1 2-1-2-2-1 2-1zM19 12l.7 1.3L21 14l-1.3.7L19 16l-.7-1.3L17 14l1.3-.7z"/>',undo:'<path d="M9 14L4 9l5-5"/><path d="M4 9h10a6 6 0 010 12h-3"/>',redo:'<path d="M15 14l5-5-5-5"/><path d="M20 9H10a6 6 0 000 12h3"/>'}).map(([k,v])=>[k,nbIc(v)]));
+async function saveFile(blob,name){const a=document.createElement("a");a.href=URL.createObjectURL(blob);a.download=name;document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(a.href),5000)}
 let nbTab="nb",nbState=null,nbDelT=0,nbSaveT=0,nbClip=null,nbPasteN=0;
 Object.assign(HT.ar,{notes:"دفاتر بالقلم: اكتب أو ارسم بخط يدك، مع أقلام وأشكال ونص وتحديد وممحاة. استورد PDF واكتب عليه، وشاركه كـ PDF."});
 Object.assign(HT.en,{notes:"Handwritten notebooks: pens, shapes, text, selection and eraser. Import a PDF and write on it, then share as PDF."});
 const nbIdb=()=>new Promise((res,rej)=>{const r=indexedDB.open("elite-nb",2);r.onupgradeneeded=()=>{const d=r.result;if(!d.objectStoreNames.contains("n"))d.createObjectStore("n",{keyPath:"id"});if(!d.objectStoreNames.contains("p"))d.createObjectStore("p",{keyPath:"id"})};r.onsuccess=()=>res(r.result);r.onerror=()=>rej(r.error)});
-const nbTx=async(m,f)=>{const d=await nbIdb();return new Promise((res,rej)=>{const x=d.transaction("n",m),q=f(x.objectStore("n"));x.oncomplete=()=>res(q&&q.result);x.onerror=()=>rej(x.error)})};
+const nbTx=async(m,f)=>{if(NB_MEM){const q=f(nbMemStore);return q&&q.result}try{const d=await nbIdb();return await new Promise((res,rej)=>{const x=d.transaction("n",m),q=f(x.objectStore("n"));x.oncomplete=()=>res(q&&q.result);x.onerror=()=>rej(x.error)})}catch(e){NB_MEM=true;toast(tx(["التخزين غير متاح على هذا الجهاز: الدفاتر مؤقتة. خذ نسخة احتياطية قبل الإغلاق.","Storage is unavailable on this device: notebooks are temporary. Back up before closing."]));const q=f(nbMemStore);return q&&q.result}};
 const nbRtl=s=>/[\u0590-\u08FF]/.test(s);
 const nbHex=c=>/^#[0-9a-f]{6}$/i.test(c)?c:"#ffffff";
 const nbDark=c=>{const h=nbHex(c).slice(1),r=parseInt(h.slice(0,2),16),g=parseInt(h.slice(2,4),16),b=parseInt(h.slice(4,6),16);return (r*299+g*587+b*114)/1000<110};
@@ -631,44 +631,52 @@ async function nbExport(a){
     await saveFile(f,f.name);
   }catch(e){toast(tx(["تعذّر التصدير","Export failed"]))}
 }
-/* ---------- handwriting → text, AI tools ---------- */
-const NB_AI={
-  sum:[["ملخص","Summarize"],"","Summarize the following notes concisely, in the same language as the notes. Output one title line starting with '# ' and then 3 to 6 bullet lines starting with '- '. Output nothing else."],
-  fix:[["تصحيح","Correct"],"","Correct spelling and grammar of the following text. Keep the meaning, the language and the line breaks. Output only the corrected text."],
-  pts:[["أهم النقاط","Key points"],"","Extract the headings and the key points of the following notes, in the same language. Use '# ' for headings and '- ' for points. Output nothing else."],
-  rew:[["إعادة صياغة","Rewrite"],"","Rewrite and organize the following notes clearly, in the same language, with '# ' headings, '- ' bullets and short paragraphs. Do not add facts. Output nothing else."],
-  qa:[["أسئلة مراجعة","Quiz me"],"","Turn the following notes into 6 to 10 review questions with short answers, in the same language. Format each as a line 'Q: ...' followed by a line 'A: ...'. Output nothing else."],
-  page:[["صفحة منسقة","Formatted page"],"","Turn the following notes into a well-formatted study page, in the same language: '# ' title, '## ' sections, '- ' bullets, short paragraphs. Do not add facts. Output nothing else."]
-};
-function nbErr(e){const c=e&&e.code;return c=="not_granted"?tx(["لم تسمح باستخدام Claude","You did not allow Claude"]):c=="rate_limited"?tx(["الطلبات كثيرة، انتظر قليلاً","Too many requests, wait a moment"]):c=="unsupported"?tx(["هذا المتصفح لا يدعم التعرّف على الخط. استخدم نسخة Claude المنشورة أو Chrome على Android أو ChromeOS.","This browser can’t recognize handwriting. Use the published Claude version or Chrome on Android/ChromeOS."]):c=="unreadable"?tx(["تعذّرت قراءة الخط","Couldn’t read the handwriting"]):c=="empty"?tx(["لا توجد نتيجة","No result"]):tx(["حدث خطأ، حاول مرة أخرى","Something went wrong, try again"])}
-async function nbInkImage(items){
-  let b=[1e9,1e9,-1e9,-1e9];items.forEach(i=>{const q=nbBox(i);b=[Math.min(b[0],q[0]),Math.min(b[1],q[1]),Math.max(b[2],q[2]),Math.max(b[3],q[3])]});
-  const pad=16,w=b[2]-b[0]+pad*2,h=b[3]-b[1]+pad*2,k=Math.min(2,1400/Math.max(w,h)),c=document.createElement("canvas");
-  c.width=Math.max(8,Math.round(w*k));c.height=Math.max(8,Math.round(h*k));const x=c.getContext("2d");x.fillStyle="#fff";x.fillRect(0,0,c.width,c.height);x.scale(k,k);x.translate(-b[0]+pad,-b[1]+pad);
-  items.forEach(i=>nbDraw(x,{...i,c:"#000",o:1,k:i.k=="fountain"?"fountain":"ball"}));
-  return new Promise(r=>c.toBlob(r,"image/png"));
+/* ---------- handwriting → text (no account), local text tools ---------- */
+const NB_AI={sum:[["ملخص","Summarize"]],pts:[["أهم النقاط","Key points"]],qa:[["أسئلة مراجعة","Quiz me"]],fix:[["تنظيف النص","Tidy text"]],page:[["صفحة منسقة","Formatted page"]]};
+function nbErr(e){const c=e&&e.code;return c=="unsupported"?tx(["التعرّف على الخط غير مفعّل على هذا الجهاز. فعّله من الإعدادات ← الأداء والرسائل، أو استخدم أداة النص (T).","Handwriting recognition is off on this device. Turn it on in Settings → Performance & messages, or use the Text tool (T)."]):c=="net"?tx(["تعذّر الاتصال بخدمة التعرّف (قد تكون محجوبة في شبكتك)","Couldn’t reach the recognition service (it may be blocked on your network)"]):c=="unreadable"?tx(["تعذّرت قراءة الخط. اكتب بحجم أكبر وأوضح، سطراً واحداً في كل مرة","Couldn’t read the handwriting. Write larger and clearer, one line at a time"]):tx(["حدث خطأ، حاول مرة أخرى","Something went wrong, try again"])}
+function nbLines(ink){
+  const all=nbItems(),B=ink.map(i=>({i,b:nbBox(i),k:all.indexOf(i)})).sort((a,b)=>(a.b[1]+a.b[3])-(b.b[1]+b.b[3])),L=[];
+  B.forEach(s=>{const cy=(s.b[1]+s.b[3])/2,l=L.find(x=>cy>x.y0-.3*x.h&&cy<x.y1+.3*x.h);if(l){l.it.push(s);l.y0=Math.min(l.y0,s.b[1]);l.y1=Math.max(l.y1,s.b[3]);l.h=l.y1-l.y0}else L.push({it:[s],y0:s.b[1],y1:s.b[3],h:Math.max(20,s.b[3]-s.b[1])})});
+  return L.sort((a,b)=>a.y0-b.y0).map(x=>x.it.sort((a,b)=>a.k-b.k).map(s=>s.i));
+}
+async function nbRecChrome(ink,L){
+  const rec=await navigator.createHandwritingRecognizer({languages:[L]}),out=[];
+  try{for(const ln of nbLines(ink)){const d=rec.startDrawing({recognitionType:"text",inputType:"touch",textContext:"",alternatives:1});ln.forEach(i=>{const st=new HandwritingStroke();i.p.forEach((q,k)=>st.addPoint({x:q[0],y:q[1],t:k*8}));d.addStroke(st)});const pr=await d.getPrediction();d.clear();if(!pr||!pr[0]||!pr[0].text)throw {code:"unreadable"};out.push(pr[0].text)}}
+  finally{try{rec.finish()}catch(e){}}
+  return out.join("\n");
+}
+async function nbRecOnline(ink,L){
+  const out=[],K=4;
+  for(const ln of nbLines(ink)){
+    let t=0,x0=1e9,y0=1e9,x1=-1e9,y1=-1e9;
+    const strokes=ln.map(i=>{const X=[],Y=[],T=[];i.p.forEach(q=>{X.push(Math.round(q[0]*K));Y.push(Math.round(q[1]*K));T.push(t);t+=12;x0=Math.min(x0,q[0]*K);y0=Math.min(y0,q[1]*K);x1=Math.max(x1,q[0]*K);y1=Math.max(y1,q[1]*K)});t+=200;return[X,Y,T]});
+    const body={options:"enable_pre_space",requests:[{writing_guide:{writing_area_width:Math.max(300,Math.round(x1-x0)+40),writing_area_height:Math.max(100,Math.round(y1-y0)+40)},ink:strokes,language:L,max_num_results:1,pre_context:""}]};
+    let r;try{r=await fetch("https://inputtools.google.com/request?itc="+L+"-t-i0-handwrit&app=demopage",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify(body)})}catch(e){throw {code:"net"}}
+    if(!r.ok)throw {code:"net"};
+    const j=await r.json(),c=j&&j[0]=="SUCCESS"&&j[1]&&j[1][0]&&j[1][0][1]&&j[1][0][1][0];if(!c)throw {code:"unreadable"};out.push(c);
+  }
+  return out.join("\n");
 }
 async function nbRecognize(ink,lang){
   const L=lang=="auto"?(S.set.lang=="ar"?"ar":"en"):lang;
-  if(aiOn()&&Plat.limits&&Plat.limits.images){
-    const blob=await nbInkImage(ink);
-    const r=await Plat.sample(`Transcribe the handwriting in this image exactly as written. It may be Arabic, English or both (${lang=="ar"?"mostly Arabic":lang=="en"?"mostly English":"detect automatically"}). Keep line breaks. Do not translate, correct or add anything. Output only the transcription, or ??? if nothing is readable.`,{images:[blob],modelTier:"quick"});
-    const t2=(r.text||"").trim();if(!t2||t2=="???")throw {code:"unreadable"};return t2;
-  }
-  if(navigator.createHandwritingRecognizer&&window.HandwritingStroke){
-    const rec=await navigator.createHandwritingRecognizer({languages:[L]}),d=rec.startDrawing({recognitionType:"text",inputType:"touch",textContext:"",alternatives:1});
-    ink.forEach(i=>{const st=new HandwritingStroke();i.p.forEach((q,k)=>st.addPoint({x:q[0],y:q[1],t:k*8}));d.addStroke(st)});
-    const pr=await d.getPrediction();d.clear();rec.finish();
-    if(pr&&pr[0]&&pr[0].text)return pr[0].text;throw {code:"unreadable"};
-  }
-  throw {code:"unsupported"};
+  if(navigator.createHandwritingRecognizer&&window.HandwritingStroke){try{return await nbRecChrome(ink,L)}catch(e){if(S.set.hwOnline!==true)throw (e&&e.code?e:{code:"unsupported"})}}
+  if(S.set.hwOnline===true)return nbRecOnline(ink,L);
+  throw {code:S.set.hwOnline===false?"unsupported":"consent"};
 }
+function nbConsent(){return new Promise(res=>{
+  const d=document.createElement("div");d.className="nbcoach";
+  d.innerHTML=`<div class="card"><b style="font-size:18px">✍️ ${tx(["تفعيل التعرّف على الخط","Enable handwriting recognition"])}</b><p style="line-height:1.8;color:var(--tx2)">${tx(["جهازك لا يحتوي على تعرّف مدمج. يمكن تحويل خطك عبر خدمة إدخال الكتابة من Google: يُرسَل شكل الكتابة المحدّدة فقط (نقاط الرسم) دون اسمك أو ملفاتك، ولا يلزم حساب. تحتاج إنترنت وقد تكون محجوبة في بعض شبكات المدارس، وهي خدمة غير رسمية وقد تتوقف.","Your device has no built-in recognizer. Your writing can be converted through Google’s handwriting input service: only the selected pen strokes are sent (no name, no files) and no account is needed. It needs internet, may be blocked on some school networks, and is an unofficial service that may stop working."])}</p><div class="row" style="justify-content:flex-end"><button class="g" data-c="no">${tx(["ليس الآن","Not now"])}</button><button class="b" data-c="yes">${tx(["موافق","Allow"])}</button></div></div>`;
+  document.body.appendChild(d);d.addEventListener("click",e=>{const b=e.target.closest("[data-c]");if(!b)return;d.remove();res(b.dataset.c=="yes")});
+})}
 async function nbHw(){
   const s=nbState,src=s.sel.length?s.sel:nbItems(),ink=src.filter(i=>i.t=="pen"&&i.k!="hl");
   if(!ink.length)return toast(tx(["اكتب بالقلم أولاً، ثم حدّد الكتابة بأداة التحديد (أو اتركها بدون تحديد لتحويل الصفحة كلها)","Write with the pen first, then select it (or select nothing to convert the whole page)"]));
   toast(tx(["جارٍ التعرّف على الخط…","Recognizing handwriting…"]));
   try{
-    const text=await nbRecognize(ink,s.hl||"auto");if(nbState!==s)return;
+    let text;
+    try{text=await nbRecognize(ink,s.hl||"auto")}
+    catch(e){if(e&&e.code=="consent"){if(await nbConsent()){S.set.hwOnline=true;sv();text=await nbRecognize(ink,s.hl||"auto")}else{S.set.hwOnline=false;sv();throw {code:"unsupported"}}}else throw e}
+    if(nbState!==s)return;
     let b=[1e9,1e9,-1e9,-1e9];ink.forEach(i=>{const q=nbBox(i);b=[Math.min(b[0],q[0]),Math.min(b[1],q[1]),Math.max(b[2],q[2]),Math.max(b[3],q[3])]});
     const lines=text.split("\n").length,z=Math.max(16,Math.min(64,Math.round((b[3]-b[1])/lines/1.5))),it={t:"tx",c:ink[0].c,o:1,s:text,x:b[0],y:b[1],z,f:s.f,b:0};
     it.w=nbMeasure(it);nbPush();const items=nbItems();ink.forEach(i=>{const k=items.indexOf(i);if(k>=0)items.splice(k,1)});items.push(it);s.sel=[it];nbBase();nbOverlay();nbOpts();nbSave();
@@ -686,24 +694,21 @@ function nbFlow(md,col){
     else if(/^[-*•]\s/.test(l))put("• "+l.replace(/^[-*•]\s/,""),26,0,6);else if(/^(Q|A|س|ج)[:：]/.test(l))put(l,27,/^(Q|س)/.test(l)?1:0,6);else put(l,26,0,10)});
   return pages;
 }
-async function nbAi(k){
+function nbAi(k){
   const s=nbState,src=s.sel.length?s.sel:nbItems(),T=src.filter(i=>i.t=="tx").sort((a,b)=>a.y-b.y||a.x-b.x);
   if(!T.length)return toast(tx(["لا يوجد نص مكتوب. حوّل الكتابة اليدوية إلى نص أولاً (✍️→T) أو أضف نصاً بأداة T.","No typed text yet. Convert handwriting first (✍️→T) or add text with the T tool."]));
-  toast(tx(["جارٍ المعالجة…","Working…"]));
-  try{
-    const r=await Plat.sample(NB_AI[k][2]+"\n\n---\n"+T.map(i=>i.s).join("\n"),{modelTier:k=="fix"?"quick":"default"}),out=(r.text||"").trim();if(!out)throw {code:"empty"};if(nbState!==s)return;
-    if(k=="fix"&&T.length==1){nbPush();T[0].s=out;T[0].w=nbMeasure(T[0]);nbBase();nbOverlay();nbSave();return toast("✓")}
-    const pg=nbFlow(out,s.col);s.pages.splice(s.pg+1,0,...pg.map(i=>({i,h:NB_H})));s.pg++;s.sel=[];nbRender();nbSave();
-    toast(tx(["أُضيفت النتيجة في صفحة جديدة","Result added on a new page"]));
-  }catch(e){toast(nbErr(e))}
+  const out=(LT[k]?LT[k](T.map(i=>i.s).join("\n")):"").trim();
+  if(!out)return toast(tx(["النص قصير جداً لهذه الأداة","The text is too short for this tool"]));
+  if(k=="fix"&&T.length==1){nbPush();T[0].s=out;T[0].w=nbMeasure(T[0]);nbBase();nbOverlay();nbSave();return toast("✓")}
+  const pg=nbFlow(out,s.col);s.pages.splice(s.pg+1,0,...pg.map(i=>({i,h:NB_H})));s.pg++;s.sel=[];nbRender();nbSave();
+  toast(tx(["أُضيفت النتيجة في صفحة جديدة","Result added on a new page"]));
 }
-const aiCard=()=>`<div class="card"><b>✨ ${tx(["أدوات الدفاتر الذكية","Smart notebook tools"])}</b><label class="row" style="margin-top:8px"><input type="checkbox" ${S.set.aiOn!==false?"checked":""} data-a="apc" data-v="aiOn"> ${tx(["تفعيل (الخط إلى نص، تلخيص، تصحيح…)","Enable (handwriting→text, summarize, correct…)"])}</label><small style="color:var(--tx2);display:block;margin-top:6px;line-height:1.6">${Plat.sample?tx(["تعمل عبر Claude داخل هذه النسخة وتستهلك استخدام حسابك، ويُطلب إذنك عند أول استخدام، ويُرسل المحتوى المحدد فقط.","Powered by Claude in this version, uses your own Claude usage, asks permission on first use and sends only the selected content."]):tx(["غير متاحة على الاستضافة العادية. يبقى تحويل الخط إلى نص على المتصفحات التي تدعمه.","Not available on plain hosting. Handwriting→text still works on browsers that support it."])}</small></div>`;
-
+const aiCard=()=>`<div class="card"><b>✍️ ${tx(["الدفاتر: التعرّف على الخط","Notebooks: handwriting"])}</b><label class="row" style="margin-top:8px"><input type="checkbox" ${S.set.hwOnline===true?"checked":""} data-a="apc" data-v="hwOnline"> ${tx(["السماح بالتعرّف عبر الإنترنت (خدمة إدخال الكتابة من Google)","Allow online recognition (Google handwriting input)"])}</label><small style="color:var(--tx2);display:block;margin-top:6px;line-height:1.7">${tx(["بدون حساب. يُستخدم التعرّف المدمج أولاً (أجهزة Chromebook)، وإلا تُرسَل نقاط الخط المحدّد فقط. أدوات التلخيص والنقاط والأسئلة والتنسيق تعمل محلياً على جهازك.","No account needed. The built-in recognizer is used first (Chromebooks); otherwise only the selected strokes are sent. Summary, key points, quiz and formatting run locally on your device."])}</small></div>`;
 /* ---------- list page ---------- */
 function nbView(){
   const L=S.nbs||[],legacy=(S.pdfs||[]).length>0;
-  const card=n=>`<div class="nbk" data-n="open" data-v="${esc(n.id)}"><div class="nbth" style="border-top:5px solid ${esc(nbHex(n.color))}">${n.th&&String(n.th).startsWith("data:image/")?`<img src="${esc(n.th)}" alt="">`:`<span>${n.pdf?"📄":"📓"}</span>`}</div><div class="nbi"><b>${esc(n.title)}</b><small>${nf(n.pages||1)} ${tx(["صفحة","pages"])} · ${new Date(n.upd||Date.now()).toLocaleDateString(LC())}</small></div><button class="g nbx" data-n="del" data-v="${esc(n.id)}" aria-label="delete">🗑</button></div>`;
-  return `<h2>${t("notes")}</h2><div class="tabs"><button class="${nbTab=="nb"?"on":""}" data-n="tab" data-v="nb">${tx(["دفاتري","Notebooks"])}</button><button class="${nbTab=="ex"?"on":""}" data-n="tab" data-v="ex">${tx(["استكشاف PDF","Explore PDF"])}</button>${legacy?`<button class="${nbTab=="pdf"?"on":""}" data-n="tab" data-v="pdf">${tx(["PDF القديم","Old PDFs"])}</button>`:""}</div>${nbTab=="ex"?exView():nbTab=="pdf"&&legacy?pdfCard():`<div class="row" style="margin-bottom:12px"><button class="b" data-n="new">+ ${tx(["دفتر جديد","New notebook"])}</button><label class="g" style="cursor:pointer;padding:9px 14px;border-radius:14px;border:1px solid var(--gb)">📄 ${tx(["استيراد PDF","Import PDF"])}<input type="file" id="nbpdf" accept="application/pdf" hidden></label></div><div class="nbg">${L.map(card).join("")||`<div class="card" style="color:var(--tx2)">${tx(["لا توجد دفاتر بعد. أنشئ دفتراً أو استورد ملف PDF واكتب عليه.","No notebooks yet. Create one or import a PDF and write on it."])}</div>`}</div>`}`;
+  const card=n=>`<div class="nbk" data-n="open" data-v="${esc(n.id)}"><div class="nbth" style="border-inline-start:9px solid ${esc(nbHex(n.color))}">${n.th&&String(n.th).startsWith("data:image/")?`<img src="${esc(n.th)}" alt="">`:`<span>${n.pdf?"📄":"📓"}</span>`}</div><div class="nbi"><b>${esc(n.title)}</b><small>${nf(n.pages||1)} ${tx(["صفحة","pages"])} · ${new Date(n.upd||Date.now()).toLocaleDateString(LC())}</small></div><button class="g nbx" data-n="del" data-v="${esc(n.id)}" aria-label="delete">🗑</button></div>`;
+  return `<h2>${t("notes")}</h2>${NB_MEM?`<div class="card" style="color:var(--hi);line-height:1.7">⚠️ ${tx(["التخزين غير متاح هنا: ستضيع الدفاتر عند إغلاق الصفحة. استخدم «نسخة احتياطية».","Storage is unavailable here: notebooks are lost when you close the page. Use Backup."])}</div>`:""}<div class="tabs"><button class="${nbTab=="nb"?"on":""}" data-n="tab" data-v="nb">${tx(["دفاتري","Notebooks"])}</button><button class="${nbTab=="ex"?"on":""}" data-n="tab" data-v="ex">${tx(["ملفات PDF","PDF files"])}</button>${legacy?`<button class="${nbTab=="pdf"?"on":""}" data-n="tab" data-v="pdf">${tx(["PDF القديم","Old PDFs"])}</button>`:""}</div>${nbTab=="ex"?exView():nbTab=="pdf"&&legacy?pdfCard():`<div class="row" style="margin-bottom:12px"><button class="b" data-n="new">+ ${tx(["دفتر جديد","New notebook"])}</button><label class="g" style="cursor:pointer;padding:9px 14px;border-radius:14px;border:1px solid var(--gb)">📄 ${tx(["استيراد PDF","Import PDF"])}<input type="file" id="nbpdf" accept="application/pdf" hidden></label><button class="g" data-n="bk">💾 ${tx(["نسخة احتياطية","Backup"])}</button><label class="g" style="cursor:pointer;padding:9px 14px;border-radius:14px;border:1px solid var(--gb)">📂 ${tx(["استعادة","Restore"])}<input type="file" id="nbrst" accept="application/json" hidden></label></div><div class="nbg">${L.map(card).join("")||`<div class="card" style="color:var(--tx2)">${tx(["لا توجد دفاتر بعد. اضغط «دفتر جديد» للكتابة بالقلم أو الإصبع، أو استورد ملف PDF واكتب عليه.","No notebooks yet. Create one or import a PDF and write on it."])}</div>`}</div>`}`;
 }
 const __vNb=views;views=function(){return pg=="notes"?nbView():__vNb()};
 function nbNew(){
@@ -737,7 +742,7 @@ async function nbImportPdf(f){
 }
 document.addEventListener("click",e=>{
   const b=e.target.closest&&e.target.closest("[data-n]");if(!b)return;const a=b.dataset.n,v=b.dataset.v;
-  if(a=="tab"){nbTab=v;render()}else if(a=="new")nbNew();else if(a=="open")nbOpen(v);
+  if(a=="tab"){nbTab=v;render()}else if(a=="new")nbNew();else if(a=="open")nbOpen(v);else if(a=="bk")nbBackup();
   else if(a=="del"){if(Date.now()-nbDelT<4000){S.nbs=(S.nbs||[]).filter(x=>x.id!=v);nbTx("readwrite",s=>s.delete(v)).catch(()=>{});sv();render()}else{nbDelT=Date.now();toast(tx(["اضغط مرة أخرى للحذف","Press again to delete"]))}}
 });
 document.addEventListener("change",e=>{if(e.target.id=="nbpdf"&&e.target.files[0]){nbImportPdf(e.target.files[0]);e.target.value=""}});
@@ -793,7 +798,7 @@ function nbEnd(){
 function nbTextAt(e,p,ed){
   const s=nbState,w=$("#nbw"),r=w.getBoundingClientRect(),k=r.width/NB_W,i=document.createElement("textarea"),z=ed?ed.z:s.z,f=ed?ed.f:s.f,b=ed?ed.b:s.bold,c=ed?ed.c:s.col;
   i.className="ptxt";i.value=ed?ed.s:"";i.dir="auto";i.placeholder=tx(["اكتب…","Type…"]);
-  i.style.cssText=`left:${ed?ed.x*k:e.clientX-r.left}px;top:${ed?ed.y*k:e.clientY-r.top}px;color:${nbHex(c)};font:${b?700:500} ${z*k}px ${(NB_FONTS[f]||NB_FONTS.sys)[1]};line-height:1.35;resize:none;overflow:hidden`;i.rows=1;
+  i.style.cssText=`left:${ed?ed.x*k:e.clientX-r.left}px;top:${ed?ed.y*k:e.clientY-r.top}px;color:${nbHex(c)};font:${b?700:500} ${z*k}px ${(NB_FONTS[f]||NB_FONTS.sys)[1]};line-height:1.35;resize:none;overflow:hidden`;i.rows=1;i.spellcheck=true;i.lang=S.set.lang;
   w.appendChild(i);setTimeout(()=>i.focus(),0);let done=0;
   const ok=()=>{if(done)return;done=1;const v=i.value.trim();i.remove();if(nbState!==s)return;
     if(ed){if(!v)return;nbPush();ed.s=v;ed.w=nbMeasure(ed)}
@@ -819,23 +824,23 @@ function nbOpts(){
   else if(n.tool=="shape")h=[["ln","╱"],["ar","➚"],["rc","▭"],["ov","◯"]].map(x=>B("shp",x[0],"",n.shape==x[0])+x[1]+"</button>").join("")+col+sz;
   else if(n.tool=="er")h=`<label class="nbl">${tx(["حجم الممحاة","Eraser"])}<input type="range" min="8" max="80" value="${n.esz}" data-p="esz" class="pz"></label>`;
   else if(n.tool=="tx")h=`<select data-p="font">${Object.entries(NB_FONTS).map(([k,v])=>`<option value="${k}" ${n.f==k?"selected":""}>${v[0]}</option>`).join("")}</select>`+B("bold",null,"Bold",n.bold)+"<b>B</b></button>"+col+`<label class="nbl">${tx(["الحجم","Size"])}<input type="range" min="12" max="96" value="${n.z}" data-p="tz" class="pz"></label>`;
-  else if(n.tool=="ai"){h=`<select data-p="hl"><option value="auto">${tx(["اللغة: تلقائي","Language: auto"])}</option><option value="ar" ${n.hl=="ar"?"selected":""}>العربية</option><option value="en" ${n.hl=="en"?"selected":""}>English</option></select><button class="g" data-p="hw">✍️→T ${tx(["تحويل الكتابة إلى نص","Handwriting → text"])}</button>`+(aiOn()?Object.keys(NB_AI).map(k=>`<button class="g" data-p="ai" data-v="${k}">${tx(NB_AI[k][0])}</button>`).join(""):"")}else if(n.tool=="sel"){h=B("all",null,tx(["تحديد الكل","Select all"]))+"▣</button>"+(n.sel.length?B("copy",null,tx(["نسخ","Copy"]))+"⧉</button>"+B("cut",null,tx(["قص","Cut"]))+"✂</button>"+B("dup",null,tx(["تكرار","Duplicate"]))+"⧈</button>"+B("del",null,tx(["حذف","Delete"]))+"🗑</button>"+B("scp",null,"+")+"＋</button>"+B("scm",null,"-")+"－</button>"+col+sz:"")+(nbClip?B("paste",null,tx(["لصق","Paste"]))+"📋</button>":"")}
+  else if(n.tool=="ai"){h=`<select data-p="hl"><option value="auto">${tx(["اللغة: تلقائي","Language: auto"])}</option><option value="ar" ${n.hl=="ar"?"selected":""}>العربية</option><option value="en" ${n.hl=="en"?"selected":""}>English</option></select><button class="g" data-p="hw">✍️→T ${tx(["تحويل الكتابة إلى نص","Handwriting → text"])}</button>`+(true?Object.keys(NB_AI).map(k=>`<button class="g" data-p="ai" data-v="${k}">${tx(NB_AI[k][0])}</button>`).join(""):"")}else if(n.tool=="sel"){h=B("all",null,tx(["تحديد الكل","Select all"]))+"▣</button>"+(n.sel.length?B("copy",null,tx(["نسخ","Copy"]))+"⧉</button>"+B("cut",null,tx(["قص","Cut"]))+"✂</button>"+B("dup",null,tx(["تكرار","Duplicate"]))+"⧈</button>"+B("del",null,tx(["حذف","Delete"]))+"🗑</button>"+B("scp",null,"+")+"＋</button>"+B("scm",null,"-")+"－</button>"+col+sz:"")+(nbClip?B("paste",null,tx(["لصق","Paste"]))+"📋</button>":"")}
   else h=`<select data-p="paper">${[["lines",["مسطّر","Lined"]],["grid",["مربعات","Grid"]],["dots",["نقاط","Dots"]],["blank",["أبيض","Blank"]]].map(x=>`<option value="${x[0]}" ${n.meta.paper==x[0]?"selected":""}>${tx(x[1])}</option>`).join("")}</select><span class="pcs">${NB_PAPERS.map(x=>`<i data-p="pcol" data-v="${x[0]}" style="background:${x[0]};${n.meta.pcol==x[0]?"outline:2px solid var(--pr)":""}"></i>`).join("")}</span>`;
   e.innerHTML=h;e.hidden=!h;
 }
 function nbTools(){
-  const n=nbState,kind=NB_KINDS.find(k=>k[0]==n.k),T=[["mv","✋"],["pen",kind?kind[2]:"✎"],["er","⌫"],["sel","⬚"],["shape","▭"],["tx","T"]].concat(hwOn()?[["ai","✨"]]:[]);
-  $("#nbtl").innerHTML=T.map(x=>`<button class="ballb ${n.tool==x[0]?"on":""}" data-p="tool" data-v="${x[0]}">${x[1]}</button>`).join("")+`<button class="ballb" data-p="un">↶</button><button class="ballb" data-p="re">↷</button>`;
+  const n=nbState,kind=NB_KINDS.find(k=>k[0]==n.k),T=[["mv",NBI.hand],["pen",NBI.pen],["er",NBI.eraser],["sel",NBI.select],["shape",NBI.shape],["tx",NBI.text]].concat([["ai",NBI.wand]]);
+  $("#nbtl").innerHTML=T.map(x=>`<button class="ballb ${n.tool==x[0]?"on":""}" data-p="tool" data-v="${x[0]}">${x[1]}</button>`).join("")+`<button class="ballb" data-p="un">${NBI.undo}</button><button class="ballb" data-p="re">${NBI.redo}</button>`;
 }
 function nbUI(){
   const n=nbState,o=document.createElement("div");o.className="nbo";o.id="nbo";
-  const H=(a,l,t2)=>`<button class="g" data-e="${a}" ${t2?`title="${t2}"`:""}>${l}</button>`;
-  o.innerHTML=`<div class="nbh">${H("x","✕")}<input id="nbt" class="nbti" value="${esc(n.meta.title)}">${H("pp","‹")}<button class="g" data-e="pages" id="nbpi"></button>${H("pn","›")}${H("addp","＋",tx(["صفحة جديدة","New page"]))}${H("dupp","⧉",tx(["تكرار الصفحة","Duplicate page"]))}${H("mvl","⇤",tx(["نقل للخلف","Move back"]))}${H("mvr","⇥",tx(["نقل للأمام","Move forward"]))}${H("delp","🗑",tx(["حذف الصفحة","Delete page"]))}${H("zo","−")}<span id="nbz">100%</span>${H("zi","+")}${H("exp","⤓",tx(["تصدير ومشاركة","Export & share"]))}</div><div class="nbb" id="nbb"><div class="nbw" id="nbw"><canvas id="nbc"></canvas><canvas id="nbl"></canvas></div></div><div class="nbbar" id="nbopts" hidden></div><div class="nbbar" id="nbtl"></div>`;
+  const M=(a,i,l)=>`<button data-e="${a}"><span>${i}</span>${l}</button>`;const H=(a,l,t2)=>`<button class="g" data-e="${a}" ${t2?`title="${t2}"`:""}>${l}</button>`;
+  o.innerHTML=`<div class="nbh">${H("x",NBI.close,tx(["إغلاق","Close"]))}<input id="nbt" class="nbti" value="${esc(n.meta.title)}"><div class="nbpill">${H("pp",NBI.prev)}<button class="g" data-e="pages" id="nbpi"></button>${H("pn",NBI.next)}</div><div class="nbpill">${H("zo",NBI.minus)}<span id="nbz">100%</span>${H("zi",NBI.plus)}</div>${H("exp",NBI.export,tx(["تصدير ومشاركة","Export & share"]))}${H("menu",NBI.more,tx(["المزيد","More"]))}</div><div class="nbmenu" id="nbmenu" hidden>${M("addp","＋",tx(["صفحة جديدة","New page"]))}${M("dupp","⧉",tx(["تكرار الصفحة","Duplicate page"]))}${M("mvl","⇤",tx(["نقل الصفحة للخلف","Move page back"]))}${M("mvr","⇥",tx(["نقل الصفحة للأمام","Move page forward"]))}${M("delp","🗑",tx(["حذف الصفحة","Delete page"]))}${M("help","؟",tx(["كيف أستخدم الدفتر؟","How do I use this?"]))}</div><div class="nbb" id="nbb"><div class="nbw" id="nbw"><canvas id="nbc"></canvas><canvas id="nbl"></canvas></div></div><div class="nbbar" id="nbopts" hidden></div><div class="nbbar" id="nbtl"></div>`;
   document.body.appendChild(o);
   const swap=(i,j)=>{const p=n.pages;[p[i],p[j]]=[p[j],p[i]];[n.hist[i],n.hist[j]]=[n.hist[j],n.hist[i]]};
   o.addEventListener("click",e=>{
     const b=e.target.closest("[data-e],[data-p]");if(!b||!nbState)return;const s=nbState,d=b.dataset;
-    if(d.e){const a=d.e;
+    if(d.e){const a=d.e;const mn=$("#nbmenu");if(mn)mn.hidden=(a=="menu")?!mn.hidden:true;
       if(a=="x")nbClose();
       else if(a=="pp"&&s.pg>0){s.pg--;s.sel=[];nbRender()}else if(a=="pn"&&s.pg<s.pages.length-1){s.pg++;s.sel=[];nbRender()}
       else if(a=="addp"){s.pages.splice(s.pg+1,0,{i:[],h:NB_H});s.pg++;s.sel=[];nbRender();nbSave()}
@@ -843,7 +848,7 @@ function nbUI(){
       else if(a=="mvl"&&s.pg>0){swap(s.pg,s.pg-1);s.pg--;nbRender();nbSave()}else if(a=="mvr"&&s.pg<s.pages.length-1){swap(s.pg,s.pg+1);s.pg++;nbRender();nbSave()}
       else if(a=="delp"){if(s.pages.length>1){s.pages.splice(s.pg,1);delete s.hist[s.pg];s.pg=Math.max(0,s.pg-1)}else{s.pages[0]={i:[],h:NB_H}}s.sel=[];nbRender();nbSave()}
       else if(a=="zo")nbZoomTo(s.zoom/1.25);else if(a=="zi")nbZoomTo(s.zoom*1.25);
-      else if(a=="exp")nbExportUI();else if(a=="pages")nbPagesUI();
+      else if(a=="exp")nbExportUI();else if(a=="pages")nbPagesUI();else if(a=="help"){S.set.nbCoach=0;nbCoach()}
       return}
     const p=d.p,v=d.v;
     if(p=="tool"){s.tool=v;s.sel=[];s.modP=0;nbTools();nbOpts();nbOverlay();nbTouch()}
@@ -896,7 +901,7 @@ function nbUI(){
   l.addEventListener("pointerup",up);l.addEventListener("pointercancel",up);
   l.addEventListener("dblclick",e=>{const p=nbPt(e),it=nbItems();for(let i=it.length-1;i>=0;i--)if(it[i].t=="tx"&&nbHit(it[i],p,6)){nbTextAt(e,p,it[i]);break}});
   let zr=0,wz=1,wx=0,wy=0;$("#nbb").addEventListener("wheel",e=>{if(!(e.ctrlKey||e.metaKey))return;e.preventDefault();wz*=Math.exp(-e.deltaY*.0025);wx=e.clientX;wy=e.clientY;if(!zr)zr=requestAnimationFrame(()=>{zr=0;const z=wz;wz=1;if(nbState)nbZoomTo(nbState.zoom*z,wx,wy)})},{passive:false});
-  nbTools();nbOpts();nbRender();
+  nbTools();nbOpts();nbRender();nbCoach();
 }
 document.addEventListener("keydown",e=>{
   if(!nbState)return;const tg=e.target.tagName;if(tg=="INPUT"||tg=="SELECT"||tg=="TEXTAREA")return;const m=e.ctrlKey||e.metaKey,k=e.key.toLowerCase();
@@ -909,60 +914,89 @@ async function nbMigrate(){
   const pages=S.notes.map(n=>{const it=[],mk=(s,x,y,z,c)=>{const o={t:"tx",c,o:1,s,x,y,z,f:"sys",b:0};o.w=Math.min(740,Math.ceil(s.length*z*.55));return o};it.push(mk(String(n.t||""),40,40,30,"#111827"));let y=100;String(n.b||"").split("\n").forEach(line=>{let l=line;if(!l.length)y+=34;while(l.length>0&&y<1080){it.push(mk(l.slice(0,48),40,y,22,"#374151"));l=l.slice(48);y+=34}});return {i:it,h:NB_H}}),id=uid();
   try{await nbTx("readwrite",s=>s.put({id,pages}));S.nbs=[{id,title:tx(["ملاحظاتي القديمة","My old notes"]),paper:"lines",pcol:"#ffffff",color:"#F59E0B",pages:pages.length,upd:Date.now()},...(S.nbs||[])];S.nbm=1;sv()}catch(e){}
 }
+
+/* ---------- notebook backup / restore (works with no account) ---------- */
+async function nbBackup(){
+  try{const items=[];for(const m of S.nbs||[]){const r=await nbTx("readonly",s=>s.get(m.id));if(r)items.push({meta:m,pages:r.pages})}
+    if(!items.length)return toast(tx(["لا توجد دفاتر للنسخ","No notebooks to back up"]));
+    await saveFile(new Blob([JSON.stringify({app:"elite-study",kind:"notebooks",v:1,items})],{type:"application/json"}),"elite-notebooks-"+dk(Date.now())+".json");toast("✓")}
+  catch(e){toast(tx(["تعذّر إنشاء النسخة","Backup failed"]))}
+}
+async function nbRestore(f){
+  try{const j=JSON.parse(await f.text());if(j.app!="elite-study"||!Array.isArray(j.items))throw 0;let n=0;
+    for(const it of j.items){if(!it||!it.meta||!it.meta.id||!Array.isArray(it.pages))continue;
+      const m={id:String(it.meta.id),title:String(it.meta.title||"").slice(0,120),paper:String(it.meta.paper||"lines"),pcol:nbHex(it.meta.pcol),color:nbHex(it.meta.color),pages:it.pages.length,upd:+it.meta.upd||Date.now(),pdf:it.meta.pdf?1:0,th:String(it.meta.th||"").startsWith("data:image/")?it.meta.th:""};
+      await nbTx("readwrite",s=>s.put({id:m.id,pages:nbNorm(it.pages)}));S.nbs=[m,...(S.nbs||[]).filter(x=>x.id!=m.id)];n++}
+    sv();render();toast(tx(["تمت استعادة ","Restored "])+n+tx([" دفتر"," notebook(s)"]))}
+  catch(e){toast(tx(["ملف غير صالح","Invalid file"]))}
+}
+document.addEventListener("change",e=>{if(e.target.id=="nbrst"&&e.target.files[0]){nbRestore(e.target.files[0]);e.target.value=""}});
+
+/* first-run guide */
+function nbCoach(){
+  if(S.set.nbCoach)return;
+  const steps=[[["اكتب أو ارسم","Write or draw"],["اكتب بالقلم أو بإصبعك. غيّر نوع القلم واللون والسمك من الشريط الذي يظهر فوق الأدوات.","Write with a pen or your finger. Change pen type, color and size from the bar above the tools."],"✏️"],[["التكبير والتحريك","Zoom and move"],["قرصة بإصبعين للتكبير والتصغير، واسحب بإصبعين للتحريك. أداة اليد للتمرير بإصبع واحد.","Pinch to zoom and drag with two fingers to move. The hand tool scrolls with one finger."],"🔍"],[["التحديد والمسح","Select and erase"],["أداة التحديد تنقل وتنسخ وتكبّر وتحذف. الممحاة تمسح الخط كله بلمسة.","The Select tool moves, copies, resizes and deletes. The eraser removes a whole stroke with one touch."],"⬚"],[["من الخط إلى نص","Handwriting to text"],["اكتب بخط يدك ثم حدّده بأداة التحديد، وافتح العصا ✨ واضغط «تحويل الكتابة إلى نص». ستجد أيضاً تلخيصاً وأسئلة مراجعة.","Write by hand, select it with the Select tool, open the wand ✨ and press Handwriting → text. You’ll also find a summary and review questions."],"✍️"]];
+  let i=0;const d=document.createElement("div");d.className="nbcoach";document.body.appendChild(d);
+  const draw=()=>{const st=steps[i];d.innerHTML=`<div class="card" style="text-align:center"><div style="font-size:44px">${st[2]}</div><b style="font-size:18px;display:block;margin:8px 0">${tx(st[0])}</b><p style="color:var(--tx2);line-height:1.8">${tx(st[1])}</p><div class="row" style="justify-content:space-between;margin-top:12px"><small style="color:var(--tx2)">${i+1}/${steps.length}</small><span class="row"><button class="g" data-c="skip">${t("skip")}</button><button class="b" data-c="next">${i==steps.length-1?tx(["ابدأ","Start"]):tx(["التالي","Next"])}</button></span></div></div>`};
+  d.addEventListener("click",e=>{const b=e.target.closest("[data-c]");if(!b)return;if(b.dataset.c=="next"&&i<steps.length-1){i++;draw()}else{d.remove();S.set.nbCoach=1;sv()}});draw();
+}
 </script>
-<script>/* Explore PDF: private files (this device, up to 300 MB) and a public library shared with other users (needs the viewer's shared storage). */
-const EX_MAX=300*1048576,EX_PUB_MAX=20*1048576,Ex={pub:[],names:{},me:null,sub:false,err:"",delT:0};
+<script>/* Local text tools: work offline with no account. Simple statistics-based helpers (not AI). */
+const LT_STOP=new Set(("the a an and or but of to in on at for with by is are was were be been it this that these those as from not no can will would should could have has had do does did you he she we they his her their our your my me us في من على إلى عن مع هذا هذه ذلك تلك هو هي هم هن نحن أنا أنت كان كانت يكون تكون ما ماذا لا لم لن قد ثم أو و أن إن إذا كل بعض التي الذي الذين هناك هنا بين حتى عند عندما كما لكن غير بعد قبل أي أيضا فقط").split(" "));
+const ltSents=t=>String(t).replace(/[ \t]+/g," ").replace(/([.!?؟])\s+/g,"$1\n").split(/\n+/).map(s=>s.trim()).filter(s=>s.length>8);
+const ltWords=s=>s.toLowerCase().replace(/[^\p{L}\p{N}\s]/gu," ").split(/\s+/).filter(w=>w.length>2&&!LT_STOP.has(w));
+function ltRank(ss){const f={};ss.forEach(s=>ltWords(s).forEach(w=>f[w]=(f[w]||0)+1));return ss.map((s,i)=>{const w=ltWords(s);return{s,i,w,f,sc:w.reduce((a,x)=>a+f[x],0)/Math.max(6,w.length)}})}
+const ltHead=l=>l.length<=50&&!/[.!?؟،,;]$/.test(l)&&l.split(/\s+/).length<=7;
+const ltFormat=t=>{const ls=String(t).split("\n").map(l=>l.trim()).filter(Boolean);return ls.map((l,i)=>{if(i==0&&ltHead(l)&&ls.length>1)return "# "+l;if(/:$/.test(l)&&l.length<60)return "## "+l.replace(/:$/,"");if(/^([-*•]|\d+[.)]|[٠-٩]+[.)])\s*/.test(l))return "- "+l.replace(/^([-*•]|\d+[.)]|[٠-٩]+[.)])\s*/,"");return l}).join("\n")};
+const LT={
+  sum:t=>{const R=ltRank(ltSents(t));if(!R.length)return"";const n=Math.max(1,Math.min(5,Math.round(R.length/3))),top=[...R].sort((a,b)=>b.sc-a.sc).slice(0,n).sort((a,b)=>a.i-b.i);return "# "+tx(["ملخص","Summary"])+"\n"+top.map(x=>"- "+x.s).join("\n")},
+  pts:t=>{const heads=String(t).split("\n").map(l=>l.trim()).filter(l=>l&&ltHead(l)),R=ltRank(ltSents(t)).sort((a,b)=>b.sc-a.sc).slice(0,6).sort((a,b)=>a.i-b.i);return heads.map(h=>"# "+h).join("\n")+(heads.length?"\n":"")+R.map(x=>"- "+x.s).join("\n")},
+  qa:t=>{const R=ltRank(ltSents(t)),out=[],dEn=/^(.{3,40}?)\s+(is|are|means|refers to)\s+(.{6,})$/i,dAr=/^(.{2,30}?)\s+(هو|هي|هم|يعني|تعني)\s+(.{4,})$/;
+    R.forEach(x=>{if(out.length>=20)return;let m=x.s.match(dAr);if(m){out.push("Q: ما "+(m[2]=="هي"||m[2]=="تعني"?"هي":"هو")+" "+m[1]+"؟");out.push("A: "+x.s);return}
+      m=x.s.match(dEn);if(m){out.push("Q: What is "+m[1]+"?");out.push("A: "+x.s);return}
+      const w=x.w.filter(k=>k.length>3).sort((a,b)=>(x.f[b]||0)-(x.f[a]||0)||b.length-a.length)[0];
+      if(w){out.push("Q: "+tx(["أكمل: ","Fill in: "])+x.s.replace(new RegExp(w.replace(/[.*+?^${}()|[\]\\]/g,"\\$&"),"i"),"_____"));out.push("A: "+w)}});
+    return out.join("\n")},
+  fix:t=>String(t).split("\n").map(l=>l.replace(/[ \t]+/g," ").replace(/\s+([,;:!?؟،])/g,"$1").replace(/([,;:!?؟،])(?=[^\s\d,;:!?؟،)\]"'])/g,"$1 ").trim().replace(/^([a-z])/,c=>c.toUpperCase())).join("\n").replace(/\n{3,}/g,"\n\n"),
+  rew:ltFormat,page:ltFormat
+};
+</script>
+<script>/* PDF files: private on this device (up to 300 MB). Optional "site library" curated by the site admin (library/index.json). */
+const EX_MAX=300*1048576,Ex={delT:0,lib:null};
 const exTx=async(m,f)=>{const d=await nbIdb();return new Promise((res,rej)=>{const x=d.transaction("p",m),q=f(x.objectStore("p"));x.oncomplete=()=>res(q&&q.result);x.onerror=()=>rej(x.error)})};
 const mb=b=>(b/1048576).toFixed(b>=10485760?0:1)+" MB";
-const exCan=()=>!!(Plat.db&&Plat.assets);
 const exRefresh=()=>{if(pg=="notes"&&nbTab=="ex"&&!nbState&&!document.querySelector(".modal"))render()};
-function exInit(){
-  if(Ex.sub||!Plat.db)return;Ex.sub=true;
-  try{
-    if(Plat.user)Plat.user.id().then(i=>{Ex.me=i}).catch(()=>{});
-    Plat.db.collection("explore").orderBy("ts","desc").limit(100).onSnapshot(sn=>{Ex.pub=sn.docs.map(d=>({id:d.id,...d.data()}));exNames();exRefresh()},e=>{Ex.err=(e&&e.code)||"error";exRefresh()});
-  }catch(e){Ex.err="error"}
-}
-async function exNames(){if(!Plat.user||!Plat.user.profiles)return;try{const ids=[...new Set(Ex.pub.map(x=>x.by).filter(Boolean))],ps=await Plat.user.profiles(ids);ids.forEach(i=>{Ex.names[i]=(ps[i]&&ps[i].name)||""});exRefresh()}catch(e){}}
 function exView(){
-  const mine=S.xpdf||[],can=exCan();
-  const mrow=m=>`<div class="sub" style="flex-wrap:wrap"><span style="flex:1;min-width:150px">📄 ${esc(m.name)} <small style="color:var(--tx2)">${mb(m.size)}</small> <span class="tag" style="background:${m.pub?"var(--pr)":"var(--tx2)"}">${m.pub?tx(["عام","Public"]):tx(["خاص","Private"])}</span></span><button class="b" data-xp="open" data-v="${esc(m.id)}">${tx(["فتح","Open"])}</button>${can?`<button class="g" data-xp="vis" data-v="${esc(m.id)}" title="${tx(["تبديل: خاص / عام","Toggle private / public"])}">${m.pub?"🔒":"🌐"}</button>`:""}<button class="g" data-xp="del" data-v="${esc(m.id)}">🗑</button></div>`;
-  const prow=x=>`<div class="sub" style="flex-wrap:wrap"><span style="flex:1;min-width:150px">📄 ${esc(x.title||"")} <small style="color:var(--tx2)">${mb(+x.size||0)} · ${esc(Ex.names[x.by]||tx(["مستخدم","User"]))}</small></span><button class="b" data-xp="popen" data-v="${esc(x.id)}">${tx(["فتح","Open"])}</button><button class="g" data-xp="pdl" data-v="${esc(x.id)}">⤓</button>${Ex.me&&x.by==Ex.me?`<button class="g" data-xp="pdel" data-v="${esc(x.id)}">🗑</button>`:""}</div>`;
-  return `<div class="card"><b>➕ ${tx(["إضافة ملف PDF","Add a PDF"])}</b><p style="color:var(--tx2);font-size:13px;line-height:1.7">${tx(["اختر الملف ثم حدّد: خاص (على جهازك فقط، حتى 300 ميجابايت) أو عام (يظهر لباقي المستخدمين، حتى 20 ميجابايت). ثم افتحه كدفتر واكتب عليه.","Pick a file, then choose Private (this device only, up to 300 MB) or Public (shown to other users, up to 20 MB). Then open it as a notebook and write on it."])}</p><label class="b" style="cursor:pointer;display:inline-block">${tx(["اختيار ملف","Choose file"])}<input type="file" id="exf" accept="application/pdf" hidden></label></div><div class="card"><b>${tx(["مكتبتي","My library"])}</b>${(mine.map(mrow).join(""))||`<small style="color:var(--tx2)">—</small>`}</div><div class="card"><b>🌐 ${tx(["المكتبة العامة","Public library"])}</b>${can?(Ex.pub.map(prow).join("")||`<small style="color:var(--tx2)">${Ex.err?tx(["تعذّر التحميل","Could not load"]):tx(["لا توجد ملفات عامة بعد","No public files yet"])}</small>`):`<p style="color:var(--tx2);font-size:13px;line-height:1.7">${tx(["المكتبة العامة تحتاج مساحة تخزين مشتركة (خادماً). هي متاحة حالياً داخل نسخة Claude المنشورة فقط، ولن تعمل على استضافة عادية بدون ربط خادم.","The public library needs shared storage (a server). It currently works only inside the published Claude version, and not on plain hosting without a backend."])}</p>`}</div>`;
+  exLibLoad();const mine=S.xpdf||[];
+  const row=m=>`<div class="sub" style="flex-wrap:wrap"><span style="flex:1;min-width:150px">📄 ${esc(m.name)} <small style="color:var(--tx2)">${mb(m.size)}</small></span><button class="b" data-xp="open" data-v="${esc(m.id)}">${tx(["فتح كدفتر","Open as notebook"])}</button><button class="g" data-xp="del" data-v="${esc(m.id)}">🗑</button></div>`;
+  return `${libCard()}<div class="card"><b>➕ ${tx(["إضافة ملف PDF","Add a PDF"])}</b><p style="color:var(--tx2);font-size:13px;line-height:1.7">${tx(["ملفاتك تبقى على جهازك فقط (حتى 300 ميجابايت للملف). افتح أي ملف كدفتر واكتب عليه.","Your files stay on this device only (up to 300 MB each). Open any file as a notebook and write on it."])}</p><label class="b" style="cursor:pointer;display:inline-block">${tx(["اختيار ملف","Choose file"])}<input type="file" id="exf" accept="application/pdf" hidden></label></div><div class="card"><b>${tx(["ملفاتي","My files"])}</b>${mine.map(row).join("")||`<small style="color:var(--tx2)">${tx(["لا توجد ملفات بعد","No files yet"])}</small>`}</div>`;
 }
-async function exAdd(f,title,pub){
+async function exAdd(f,title){
   if(f.size>EX_MAX)return toast(tx(["الحجم أكبر من 300 ميجابايت","File exceeds 300 MB"]));
   const id=uid();
-  try{await exTx("readwrite",s=>s.put({id,blob:f}))}catch(e){return toast(tx(["تعذّر الحفظ (المساحة ممتلئة؟)","Could not save (storage full?)"]))}
-  const m={id,name:title,size:f.size,ts:Date.now(),pub:false};S.xpdf=[m,...(S.xpdf||[])];sv();
-  if(pub)await exPublish(m,f);render();
+  try{await exTx("readwrite",s=>s.put({id,blob:f}))}catch(e){return toast(tx(["تعذّر الحفظ (المساحة ممتلئة أو التخزين ممنوع)","Could not save (storage full or blocked)"]))}
+  S.xpdf=[{id,name:title,size:f.size,ts:Date.now()},...(S.xpdf||[])];sv();render();
 }
-async function exPublish(m,blob){
-  if(!exCan())return toast(tx(["المكتبة العامة غير متاحة هنا","The public library isn’t available here"]));
-  if(blob.size>EX_PUB_MAX)return toast(tx(["الملفات العامة حتى 20 ميجابايت","Public files are limited to 20 MB"]));
-  try{const up=await Plat.assets.upload(blob,{type:"application/pdf"}),me=Plat.user?await Plat.user.id():"";await Plat.db.collection("explore").doc(m.id).set({title:m.name,size:m.size,aid:up.id,url:up.url,by:me,ts:Date.now()});m.pub=true;m.aid=up.id;sv();toast(tx(["تم النشر للجميع","Published to everyone"]))}
-  catch(e){toast(tx(["تعذّر النشر العام (قد تحتاج صلاحية رفع)","Public upload failed (you may need upload permission)"]))}
-}
-async function exUnpublish(m){try{await Plat.db.collection("explore").doc(m.id).delete();if(m.aid&&Plat.assets)await Plat.assets.delete(m.aid)}catch(e){}m.pub=false;m.aid="";sv()}
-async function exBlob(id){const r=await exTx("readonly",s=>s.get(id));return r&&r.blob}
-async function exFetch(x){const r=await fetch(x.url);if(!r.ok)throw 0;return await r.blob()}
 function exAsk(f){
   if(f.size>EX_MAX)return toast(tx(["الحجم أكبر من 300 ميجابايت","File exceeds 300 MB"]));
-  const can=exCan()&&f.size<=EX_PUB_MAX,d=document.createElement("div");d.className="modal";
-  d.innerHTML=`<div class="card"><b style="font-size:18px">${tx(["إضافة PDF","Add PDF"])}</b><div class="row" style="margin:12px 0"><input id="ext" value="${esc(f.name.replace(/\.pdf$/i,""))}"></div><div class="row"><label>${tx(["الظهور","Visibility"])}</label><select id="exv"><option value="0">${tx(["خاص (جهازي فقط)","Private (this device)"])}</option>${can?`<option value="1">${tx(["عام (يظهر للمستخدمين)","Public (visible to users)"])}</option>`:""}</select></div><small style="color:var(--tx2);display:block;margin-top:8px">${mb(f.size)}${exCan()&&f.size>EX_PUB_MAX?" · "+tx(["العام حتى 20 ميجابايت فقط","Public is limited to 20 MB"]):""}</small><div class="row" style="justify-content:flex-end;margin-top:14px"><button class="g" data-k="x">${t("exit")}</button><button class="b" data-k="ok">${t("save")}</button></div></div>`;
+  const d=document.createElement("div");d.className="modal";
+  d.innerHTML=`<div class="card"><b style="font-size:18px">${tx(["إضافة PDF","Add PDF"])}</b><div class="row" style="margin:12px 0"><input id="ext" value="${esc(f.name.replace(/\.pdf$/i,""))}"></div><small style="color:var(--tx2)">${mb(f.size)}</small><div class="row" style="justify-content:flex-end;margin-top:14px"><button class="g" data-k="x">${t("exit")}</button><button class="b" data-k="ok">${t("save")}</button></div></div>`;
   document.body.appendChild(d);
-  d.addEventListener("click",async e=>{const k=e.target.closest("[data-k]");if(!k)return;if(k.dataset.k=="ok"){const title=d.querySelector("#ext").value.trim()||f.name,pub=d.querySelector("#exv").value=="1";d.remove();await exAdd(f,title,pub)}else d.remove()});
+  d.addEventListener("click",async e=>{const k=e.target.closest("[data-k]");if(!k)return;if(k.dataset.k=="ok"){const title=d.querySelector("#ext").value.trim()||f.name;d.remove();await exAdd(f,title)}else d.remove()});
 }
 document.addEventListener("change",e=>{if(e.target.id=="exf"&&e.target.files[0]){exAsk(e.target.files[0]);e.target.value=""}});
+async function exLibLoad(){
+  if(Ex.lib!==null)return;Ex.lib=[];
+  try{const r=await fetch("library/index.json?"+Date.now(),{cache:"no-store"});if(r.ok){const j=await r.json();if(Array.isArray(j))Ex.lib=j.filter(x=>x&&x.title&&typeof x.file=="string"&&!/^[a-z]+:/i.test(x.file)&&!x.file.includes("..")).slice(0,500)}}catch(e){}
+  exRefresh();
+}
+const libCard=()=>Ex.lib&&Ex.lib.length?`<div class="card"><b>📚 ${tx(["مكتبة الموقع","Site library"])}</b><small style="color:var(--tx2);display:block;margin:4px 0 6px">${tx(["ملفات يضيفها مشرف الموقع — بدون حساب.","Files added by the site admin — no account needed."])}</small>${Ex.lib.map((x,i)=>`<div class="sub" style="flex-wrap:wrap"><span style="flex:1;min-width:150px">📄 ${esc(x.title)} <small style="color:var(--tx2)">${esc(x.subject||"")}${x.size?" · "+mb(+x.size):""}</small></span><button class="b" data-xp="lopen" data-v="${i}">${tx(["فتح","Open"])}</button><button class="g" data-xp="ldl" data-v="${i}">⤓</button></div>`).join("")}</div>`:"";
 document.addEventListener("click",async e=>{
-  const b=e.target.closest&&e.target.closest("[data-xp]");if(!b)return;const a=b.dataset.xp,id=b.dataset.v,m=(S.xpdf||[]).find(x=>x.id==id),px=Ex.pub.find(x=>x.id==id);
+  const b=e.target.closest&&e.target.closest("[data-xp]");if(!b)return;const a=b.dataset.xp,id=b.dataset.v,m=(S.xpdf||[]).find(x=>x.id==id);
   try{
-    if(a=="open"&&m){const bl=await exBlob(id);if(bl)nbImportPdf(new File([bl],m.name+".pdf",{type:"application/pdf"}))}
-    else if(a=="vis"&&m){if(m.pub)await exUnpublish(m);else{const bl=await exBlob(id);if(bl)await exPublish(m,bl)}render()}
-    else if(a=="del"&&m){if(Date.now()-Ex.delT<4000){if(m.pub)await exUnpublish(m);await exTx("readwrite",s=>s.delete(id));S.xpdf=S.xpdf.filter(x=>x.id!=id);sv();render()}else{Ex.delT=Date.now();toast(tx(["اضغط مرة أخرى للحذف","Press again to delete"]))}}
-    else if(a=="popen"&&px){toast(tx(["جارٍ التنزيل…","Downloading…"]));nbImportPdf(new File([await exFetch(px)],(px.title||"file")+".pdf",{type:"application/pdf"}))}
-    else if(a=="pdl"&&px)await saveFile(await exFetch(px),(px.title||"file")+".pdf");
-    else if(a=="pdel"&&px){if(Date.now()-Ex.delT<4000){await Plat.db.collection("explore").doc(id).delete();try{if(px.aid)await Plat.assets.delete(px.aid)}catch(x){}const mm2=(S.xpdf||[]).find(x=>x.id==id);if(mm2){mm2.pub=false;sv()}}else{Ex.delT=Date.now();toast(tx(["اضغط مرة أخرى للحذف","Press again to delete"]))}}
+    if(a=="open"&&m){const r=await exTx("readonly",s=>s.get(id));if(r&&r.blob)nbImportPdf(new File([r.blob],m.name+".pdf",{type:"application/pdf"}))}
+    else if(a=="del"&&m){if(Date.now()-Ex.delT<4000){await exTx("readwrite",s=>s.delete(id));S.xpdf=S.xpdf.filter(x=>x.id!=id);sv();render()}else{Ex.delT=Date.now();toast(tx(["اضغط مرة أخرى للحذف","Press again to delete"]))}}
+    else if((a=="lopen"||a=="ldl")&&Ex.lib&&Ex.lib[+id]){const x=Ex.lib[+id];toast(tx(["جارٍ التنزيل…","Downloading…"]));const r=await fetch(x.file);if(!r.ok)throw 0;const bl=await r.blob();if(a=="lopen")nbImportPdf(new File([bl],x.title+".pdf",{type:"application/pdf"}));else await saveFile(bl,x.title+".pdf")}
   }catch(err){toast(tx(["تعذّر تنفيذ العملية","The action failed"]))}
 });
 </script>
@@ -1024,38 +1058,55 @@ const dashEditCard=()=>`<div class="card"><b>🧩 ${tx(["الصفحة الرئي
 const profCard=()=>{const s=S.set,O=(k,L)=>`<select data-a="ap" data-v="${k}"><option value="">${tx(["—","—"])}</option>${L.map(x=>`<option value="${x[0]}" ${s[k]==x[0]?"selected":""}>${tx(x[1])}</option>`).join("")}</select>`;
   return `<div class="card"><b>👤 ${tx(["بياناتي","My profile"])}</b><div class="row" style="margin-top:10px"><label>${tx(["الجنس","Gender"])}</label>${O("gender",[["m",["ذكر","Male"]],["f",["أنثى","Female"]]])}<label>${tx(["العمر","Age"])}</label><input type="number" min="5" max="99" style="max-width:80px;flex:none" value="${s.age||""}" data-a="ap" data-v="age"></div><div class="row" style="margin-top:10px"><label>${tx(["الديانة","Faith"])}</label>${O("faith",[["m",["مسلم","Muslim"]],["c",["مسيحي","Christian"]],["o",["أخرى","Other"]]])}</div><small style="color:var(--tx2);display:block;margin-top:8px;line-height:1.6">${tx(["اختيارية وتُحفظ على جهازك فقط. تُستخدم لتخصيص التحية وإظهار ميزة الصلاة.","Optional, stored on this device only. Used for the greeting and the prayer feature."])}</small></div>`};
 </script>
-<script>/* Version number, "What's new", NEW badges and the Update button. */
-const APP_VERSION="2.2.0";
+<script>/* Version number, "What's new", NEW badges, and automatic updates (no button: the app checks quietly and refreshes itself when it is safe). */
+const APP_VERSION="2.4.0";
 const RELEASES=[
- {v:"2.2.0",d:"2026-11-06",n:[["تحويل الكتابة اليدوية إلى نص (تجريبي)","Handwriting to text (experimental)"],["أدوات ملاحظات ذكية: تلخيص، تصحيح، أسئلة","Smart note tools: summarize, correct, quiz"],["مكتبة PDF خاصة (حتى 300 ميجابايت) وعامة","Private (up to 300 MB) and public PDF library"],["تكبير وتنقل أفضل وشبكة صفحات سريعة","Better zoom, panning and a quick page grid"],["نص متعدد الأسطر وتصدير صفحة أو دفتر","Multi-line text, export a page or a notebook"],["شريط جديد للهاتف واللوحي","New phone and tablet navigation"],["رقم الإصدار وزر التحديث","Version number and Update button"]]},
- {v:"2.1.0",d:"2026-11-05",n:[["دفاتر بالقلم وصفحة رئيسية بودجت","Handwritten notebooks and a widget home"],["شريط QR عائم بدل الذكاء الاصطناعي","Floating QR instead of the AI window"]]}
+ {v:"2.4.0",d:"2026-11-08",n:[["تحديث تلقائي بدون أزرار","Automatic updates, no buttons"],["دفاتر بشكل جديد: أيقونات واضحة وقائمة «المزيد» وشرح أول مرة","Notebooks redesigned: clear icons, a More menu and a first-run guide"],["تحويل الخط إلى نص بدون حساب (مدمج أو عبر الإنترنت باختيارك)","Handwriting → text with no account (built-in or online, your choice)"],["إزالة المكتبة العامة والاعتماد على Claude","Removed the public library and the Claude dependency"]]},
+ {v:"2.3.0",d:"2026-11-07",n:[["كل ميزات الدفاتر تعمل بدون أي حساب","Every notebook feature works with no account"],["تلخيص ونقاط وأسئلة وتنسيق محلياً بدون إنترنت","Local summary, key points, quiz and formatting, offline"],["نسخة احتياطية واستعادة للدفاتر وفحص الجهاز","Notebook backup/restore and Device check"]]},
+ {v:"2.2.0",d:"2026-11-06",n:[["تكبير وتنقل أفضل وشبكة صفحات","Better zoom, panning and a page grid"],["نص متعدد الأسطر وتصدير صفحة أو دفتر","Multi-line text, export a page or a notebook"],["شريط جديد للهاتف واللوحي","New phone and tablet navigation"]]}
 ];
-const NEW_IN={notes:"2.2.0"};
+const NEW_IN={notes:"2.4.0"};
 const isNew=k=>!!NEW_IN[k]&&NEW_IN[k]==APP_VERSION&&!(S.seenNew||[]).includes(k+NEW_IN[k]);
 const cmpVer=(a,b)=>{const x=String(a).split(".").map(Number),y=String(b).split(".").map(Number);for(let i=0;i<3;i++){const d=(x[i]||0)-(y[i]||0);if(d)return d>0?1:-1}return 0};
-let updLog=false,updRemote=null,updMsg="";
+let updLog=false;
 const __vNew=views;views=function(){const k=pg;if(isNew(k))setTimeout(()=>{S.seenNew=[...(S.seenNew||[]),k+NEW_IN[k]];sv()},4000);return __vNew()};
-function verCard(){
-  const nw=updRemote&&cmpVer(updRemote,APP_VERSION)>0;
-  return `<div class="card" style="margin-top:12px"><div class="row" style="justify-content:space-between"><b>ELITE STUDY</b><span class="tag" style="background:var(--pr)">v${APP_VERSION}</span></div><small id="updst" style="color:var(--tx2);display:block;margin:6px 0">${esc(updMsg||(nw?tx(["يتوفر إصدار أحدث: ","A newer version is available: "])+updRemote:tx(["لا حاجة للتحديث الآن.","You’re up to date."])))}</small><div class="row"><button class="b" data-u="go">⟳ ${tx(["تحديث","Update"])}${nw?' <span class="tag nw">NEW</span>':""}</button><button class="g" data-u="chk">${tx(["فحص","Check"])}</button><button class="g" data-u="log">🆕 ${tx(["ما الجديد","What’s new"])}</button></div>${updLog?RELEASES.map((r,i)=>`<div style="margin-top:10px"><b>v${r.v}</b> <small style="color:var(--tx2)">${r.d}</small>${i==0?' <span class="tag nw">NEW</span>':""}${r.n.map(x=>`<div class="sub"><span>• ${tx(x)}</span></div>`).join("")}</div>`).join(""):""}</div>`;
+const verCard=()=>`<div class="row" style="justify-content:space-between;margin-top:14px;color:var(--tx2);font-size:12px"><span>ELITE STUDY v${APP_VERSION}</span><button class="g" data-u="log" style="padding:4px 10px;min-height:0">🆕 ${tx(["ما الجديد","What’s new"])}</button></div>${updLog?`<div class="card">${RELEASES.map((r,i)=>`<div style="margin-bottom:10px"><b>v${r.v}</b> <small style="color:var(--tx2)">${r.d}</small>${i==0?' <span class="tag nw">NEW</span>':""}${r.n.map(x=>`<div class="sub"><span>• ${tx(x)}</span></div>`).join("")}</div>`).join("")}</div>`:""}`;
+document.addEventListener("click",e=>{if(e.target.closest&&e.target.closest("[data-u=log]")){updLog=!updLog;render()}});
+/* automatic update: runs only on a real website; never interrupts writing, a running timer or an open dialog */
+async function remoteVersion(){
+  try{const r=await fetch("version.json?"+Date.now(),{cache:"no-store"});if(r.ok){const j=await r.json();if(j&&j.version)return String(j.version)}}catch(e){}
+  try{const r=await fetch(location.href.split("#")[0],{cache:"no-store"});if(r.ok){const m=(await r.text()).match(/const APP_VERSION="([\d.]+)"/);if(m)return m[1]}}catch(e){}
+  return null;
 }
-async function updCheck(){
-  updMsg=tx(["جارٍ الفحص…","Checking…"]);
-  try{const r=await fetch("version.json?"+Date.now(),{cache:"no-store"});if(!r.ok)throw 0;const j=await r.json();updRemote=String(j.version||"");updMsg=cmpVer(updRemote,APP_VERSION)>0?tx(["يتوفر إصدار أحدث: ","A newer version is available: "])+updRemote:tx(["أنت على أحدث إصدار.","You’re on the latest version."])}
-  catch(e){updRemote=null;updMsg=tx(["لا يوجد خادم تحديثات هنا. زر «تحديث» يعيد تحميل أحدث نسخة منشورة.","No update server here. The Update button reloads the latest published version."])}
-}
-async function updApply(){
-  updMsg=tx(["جارٍ تنزيل التحديث…","Downloading the update…"]);const st=$("#updst");if(st)st.textContent=updMsg;
+const safeNow=()=>!nbState&&!S.tm.running&&!document.hidden&&!document.querySelector(".modal,.nbo,.pv,.nbcoach");
+let updBusy=false;
+async function autoUpdate(){
+  if(updBusy||!location.protocol.startsWith("http")||/claude|usercontent/.test(location.hostname))return;
+  updBusy=true;
   try{
-    if(window.caches)for(const k of await caches.keys())await caches.delete(k);
+    const v=await remoteVersion();if(!v||cmpVer(v,APP_VERSION)<=0){updBusy=false;return}
     const urls=[...document.querySelectorAll("script[src],link[rel=stylesheet]")].map(x=>x.src||x.href).filter(u=>u.startsWith(location.origin));
-    await Promise.all([location.href,...urls].map(u=>fetch(u,{cache:"reload"}).catch(()=>0)));
-  }catch(e){}
-  location.reload();
+    await Promise.all([location.href.split("#")[0],...urls].map(u=>fetch(u,{cache:"reload"}).catch(()=>0)));
+    toast(tx(["تم تنزيل تحديث جديد وسيُطبَّق تلقائياً","A new update was downloaded and will apply automatically"]));
+    const go=()=>{if(safeNow())location.reload();else setTimeout(go,30000)};go();
+  }catch(e){updBusy=false}
 }
-document.addEventListener("click",async e=>{const b=e.target.closest&&e.target.closest("[data-u]");if(!b)return;const a=b.dataset.u;
-  if(a=="log"){updLog=!updLog;render()}else if(a=="chk"){await updCheck();render()}else if(a=="go")updApply()});
-setTimeout(()=>{if(location.protocol.startsWith("http")&&!/claude|usercontent/.test(location.hostname))updCheck().then(()=>{if(updRemote&&cmpVer(updRemote,APP_VERSION)>0){toast(tx(["يتوفر تحديث جديد — افتح الرئيسية واضغط تحديث","A new update is available — open Home and press Update"]));render()}})},4000);
+if(S.set.lastVer&&S.set.lastVer!=APP_VERSION)setTimeout(()=>toast(tx(["تم تحديث التطبيق إلى v","App updated to v"])+APP_VERSION+" 🆕"),2500);
+S.set.lastVer=APP_VERSION;setTimeout(sv,3000);
+setTimeout(autoUpdate,5000);setInterval(autoUpdate,30*60*1000);
+</script>
+<script>/* Device check: tells each user what works on their device (useful on managed school devices). */
+let diagRes=null;
+const diagLine=(ok,l,hint)=>`<div class="sub"><span style="flex:1">${ok===true?"✅":ok===false?"❌":"⚠️"} ${l}</span></div>${ok!==true&&hint?`<small style="color:var(--tx2);display:block;margin:-2px 0 8px;line-height:1.6">${hint}</small>`:""}`;
+async function diagRun(){
+  const r={};r.touch=matchMedia("(pointer:coarse)").matches;
+  try{await nbTx("readwrite",s=>s.put({id:"__d",pages:[]}));await nbTx("readwrite",s=>s.delete("__d"));r.store=!NB_MEM}catch(e){r.store=false}
+  try{r.persist=navigator.storage&&navigator.storage.persisted?await navigator.storage.persisted():null}catch(e){r.persist=null}
+  r.hw={};for(const l of["ar","en"]){try{r.hw[l]=navigator.queryHandwritingRecognizerSupport?!!(await navigator.queryHandwritingRecognizerSupport({languages:[l]})).languages:false}catch(e){r.hw[l]=false}}
+  r.online=navigator.onLine;r.pdf=typeof pdfjsLib!="undefined";r.qr=!!window.QRCode;diagRes=r;render();
+}
+const diagCard=()=>{const r=diagRes;return `<div class="card"><b>🩺 ${tx(["فحص الجهاز","Device check"])}</b><p style="color:var(--tx2);font-size:13px;line-height:1.7">${tx(["يوضح ما الذي يعمل على جهازك وما الذي تمنعه سياسة المدرسة أو المتصفح، بدون حساب.","Shows what works on your device and what school or browser policy blocks. No account needed."])}</p><button class="b" data-g="diag">${tx(["ابدأ الفحص","Run check"])}</button>${r?`<div style="margin-top:10px">${diagLine(r.store,tx(["حفظ الدفاتر على الجهاز","Saving notebooks on this device"]),tx(["التخزين ممنوع أو مؤقت (وضع خاص أو سياسة المدرسة). ستضيع الدفاتر عند الإغلاق، فاستخدم «نسخة احتياطية» في الملاحظات.","Storage is blocked or temporary (private mode or school policy). Notebooks are lost on close, so use Backup in Notes."]))}${diagLine(r.persist,tx(["تخزين دائم","Persistent storage"]),tx(["قد يمسح المتصفح البيانات عند امتلاء المساحة. خذ نسخة احتياطية دورياً.","The browser may clear data when space runs low. Back up regularly."]))}${diagLine(r.hw.ar,tx(["تحويل الخط العربي إلى نص","Arabic handwriting → text"]),tx(["غير مدمج في جهازك. فعّل «التعرّف عبر الإنترنت» من الإعدادات ← الأداء والرسائل، أو استخدم أداة النص (T).","Not built into your device. Turn on online recognition in Settings → Performance & messages, or use the Text tool (T)."]))}${diagLine(r.hw.en,tx(["تحويل الخط الإنجليزي إلى نص","English handwriting → text"]),"")}${diagLine(r.pdf,tx(["مكتبة PDF","PDF library"]),tx(["لم تُحمّل (إنترنت ضعيف أو حظر cdnjs). استيراد PDF لن يعمل.","Not loaded (weak internet or cdnjs blocked). PDF import won’t work."]))}${diagLine(r.online,tx(["الاتصال بالإنترنت","Internet connection"]),"")}</div>`:""}</div>`};
+document.addEventListener("click",e=>{if(e.target.closest&&e.target.closest("[data-g=diag]"))diagRun()});
 </script>
 <script>/* Entry point: runs after every other script has loaded. */
 function sanitize(o){
@@ -1064,8 +1115,10 @@ function sanitize(o){
     set:{...S.set,...(o.set&&typeof o.set=="object"&&!Array.isArray(o.set)?o.set:{})},lic:S.lic};
 }
 (async function(){
+  try{if(navigator.storage&&navigator.storage.persist)navigator.storage.persist()}catch(e){}
   if(S.tm.running&&S.tm.endAt<=Date.now())finish();
   render();
+  try{await nbTx('readwrite',s=>s.put({id:'__t',pages:[]}));await nbTx('readwrite',s=>s.delete('__t'))}catch(e){}
   try{await nbMigrate();render()}catch(e){}
 })();
 </script>
